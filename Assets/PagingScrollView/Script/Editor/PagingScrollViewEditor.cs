@@ -10,8 +10,6 @@ namespace doublsb.UI
     {
         public PagingScrollView origin;
 
-        private int temp;
-
         private void OnEnable()
         {
             origin = (PagingScrollView)target;
@@ -23,13 +21,7 @@ namespace doublsb.UI
 
             EditorGUILayout.LabelField("Option", EditorStyles.boldLabel);
 
-            temp = EditorGUILayout.IntSlider("Visible Count", origin.visibleCount, 0, 10);
-            if(temp != origin.visibleCount)
-            {
-                origin.visibleCount = temp;
-                origin.forceUpdateAtEditor();
-            }
-            
+            origin.visibleCount = EditorGUILayout.IntSlider("Visible Count", origin.visibleCount, 0, 10);
             origin.padding = EditorGUILayout.FloatField("Left Padding", origin.padding);
 
             EditorGUILayout.Space();
@@ -40,6 +32,7 @@ namespace doublsb.UI
 
             if (EditorGUI.EndChangeCheck())
             {
+                origin.forceUpdateAtEditor();
                 EditorUtility.SetDirty(origin);
             }
         }
